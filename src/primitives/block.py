@@ -3,10 +3,10 @@ from Crypto.Hash import SHA256
 
 
 class Block:
-    def __init__(self, index, unix, data, prevHash=""):
+    def __init__(self, index, unix, transactions, prevHash=""):
         self.index = index
         self.unix = unix
-        self.data = data
+        self.transactions = transactions
         self.prevHash = prevHash
         """
         Nonce is used so when we mine a coin we always
@@ -19,7 +19,10 @@ class Block:
         retStr = "Block:\n"
         retStr += f"-index: {self.index}\n"
         retStr += f"-unix: {self.unix}\n"
-        retStr += f"-data: {self.data}\n"
+        retStr += "--- Transactions in block: ---\n"
+        for i in range(0, len(self.transactions)):
+            retStr += f"-{self.transactions[i].toString()}\n"
+        retStr += "--- Transactions in block end ---\n"
         retStr += f"-prevHash: {self.prevHash}\n"
         retStr += f"-hash: {self.hash}\n"
         retStr += f"-nonce: {self.nonce}\n"
@@ -27,8 +30,20 @@ class Block:
 
     def calculateHash(self):
         ecodedStr = (str(self.index) + str(self.unix) +
-                     dumps(self.data) + self.prevHash + str(self.nonce)).encode("UTF-8")
+                     self.arrayOfInstancesToJson(self.transactions) + self.prevHash + str(self.nonce)).encode("UTF-8")
         return SHA256.new(ecodedStr).hexdigest()
+
+    """
+    In python3 instances or an array of instances of a class cannot be converted to json,
+    thats why we will do some tricks
+    """
+
+    def arrayOfInstancesToJson(self, arr):
+        retStr = ""
+        for instance in arr:
+            # Convert the instance in a dictionary which is serializable
+            retStr += dumps(instance.__dict__)
+        return retStr
 
     """
     As we need proof of work, to validate that the blockchain is
@@ -39,14 +54,14 @@ class Block:
     def mineBlock(self, difficulty):
         zeros = ""
         """
-        PyLint will set unused variable for i if we define it
+        PyLint will mark unused variable for i if we define it
         without _ (means intentionally used)
         """
         for _ in range(0, difficulty):
             zeros += "0"
         while(self.hash[0:difficulty] != zeros):
-            self.hash = self.calculateHash()
             self.nonce += 1
+            self.hash = self.calculateHash()
 
-        print("---- New block was mined ----\n")
-        print(self.toString())
+        # print("---- New block was mined ----\n")
+        # print(self.toString())
