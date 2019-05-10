@@ -26,19 +26,14 @@ function Navbar(props) {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" color="inherit" className={classes.grow}>
-          TimCOIN
+          TimCOIN - The not so decentralized cryptocurrency
         </Typography>
-        <Link to="/explorer" className={classes.menuLink}>
-          <Button color="inherit" size="large" className={classes.marginRight}>
-            Explorer
-          </Button>
-        </Link>
-        <Link to="/wallet" className={classes.menuLink}>
+        <Link to="/TIMCoin/wallet" className={classes.menuLink}>
           <Button color="inherit" size="large" className={classes.marginRight}>
             Wallet
           </Button>
         </Link>
-        <Link to="/mine" className={classes.menuLink}>
+        <Link to="/TIMCoin/mine" className={classes.menuLink}>
           <Button color="inherit" size="large">
             Mine
           </Button>

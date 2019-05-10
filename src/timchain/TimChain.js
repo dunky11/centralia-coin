@@ -1,20 +1,28 @@
-import Block from "Block";
-import Transaction from "Transaction";
+import Transaction from "./Transaction";
+import Block from "./Block";
 
 class TimChain {
-  constructor(difficulty, chain = false) {
-    if (chain) {
-      this.chain = chain;
-    } else {
-      this.chain = [this.createGenesisBlock()];
+  constructor(difficulty, updateChain = false) {
+    this.updateChain = updateChain;
+    const genesisBlock = this.createGenesisBlock();
+    if (this.updateChain) {
+      this.updateChain([genesisBlock]);
     }
+    this.chain = [genesisBlock];
     this.difficulty = difficulty;
     this.pendingTransactions = [];
     this.miningReward = 1000;
   }
 
+  needsNewBlock = true;
+
   createGenesisBlock() {
-    return new Block(Date.now(), [], "Im the genesis block");
+    return new Block(
+      Date.now(),
+      [],
+      "Im the genesis block, i got no	predecessor",
+      0
+    );
   }
 
   getLatestBlock() {
@@ -27,16 +35,26 @@ class TimChain {
       miningRewardAddress,
       this.miningReward
     );
-    this.pendingTransactions.push(rewardTx);
-
-    let block = new Block(
-      Date.now(),
-      this.pendingTransactions,
-      this.getLatestBlock().hash
-    );
-    block.mineBlock(this.difficulty);
-    this.chain.push(block);
+    if (this.needsNewBlock) {
+      this.pendingTransactions.push(rewardTx);
+      this.curBlock = new Block(
+        Date.now(),
+        this.pendingTransactions,
+        this.getLatestBlock().hash,
+        this.getLatestBlock().index + 1
+      );
+      this.needsNewBlock = false;
+    }
+    if (!this.curBlock.mineBlock(this.difficulty, 150)) {
+      return false;
+    }
+    this.chain.push(this.curBlock);
+    if (this.updateChain) {
+      this.updateChain(this.chain);
+    }
     this.pendingTransactions = [];
+    this.needsNewBlock = true;
+    return true;
   }
 
   addTransaction(transaction) {

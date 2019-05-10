@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, PureComponent } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Paper from "@material-ui/core/Paper";
@@ -10,6 +10,7 @@ import PropsRoute from "./components/utils/PropsRoute";
 import Wallet from "./components/wallet/Wallet";
 import Explorer from "./components/explorer/Explorer";
 import Mine from "./components/mine/Mine";
+import TimChain from "./timchain/TimChain";
 
 const styles = theme => ({
   contentWrapper: {
@@ -32,46 +33,64 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 3,
     paddingRight: theme.spacing.unit * 3,
     width: "100%"
+  },
+  explorerPaper: {
+    padding: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 4
   }
 });
 
-function App(props) {
-  const { location, classes } = props;
-  return (
-    <Fragment>
-      <Navbar />
-      <div className={classes.flexBox}>
-        <div className={classes.contentWrapper}>
-          <Grid container justify="space-between">
-            <Grid item xs={12} md={7}>
-              <Paper className={classes.paperPaddingLeft}>
-                <Switch>
-                  <PropsRoute
-                    location={location}
-                    path="/wallet"
-                    component={Wallet}
-                  />
-                  <PropsRoute
-                    location={location}
-                    path="/mine"
-                    component={Mine}
-                  />
-                  <PropsRoute
-                    location={location}
-                    path=""
-                    component={Explorer}
-                  />
-                </Switch>
-              </Paper>
+class App extends PureComponent {
+  state = { timChain: null, chain: [] };
+
+  updateChain = chain => {
+    const copyChain = [...chain];
+    this.setState({ chain: copyChain });
+  };
+
+  componentDidMount() {
+    const timChain = new TimChain(4, this.updateChain);
+    this.setState({ timChain });
+  }
+
+  render() {
+    const { location, classes } = this.props;
+    const { timChain, chain } = this.state;
+    return (
+      <Fragment>
+        <Navbar />
+        <div className={classes.flexBox}>
+          <div className={classes.contentWrapper}>
+            <Grid container justify="space-between">
+              <Grid item xs={12} md={7}>
+                <Paper className={classes.paperPaddingLeft}>
+                  <Switch>
+                    <PropsRoute
+                      location={location}
+                      path="/TIMCoin/mine"
+                      component={Mine}
+                      timChain={timChain}
+                    />
+                    <PropsRoute
+                      location={location}
+                      path="/TIMCoin/"
+                      component={Wallet}
+                      timChain={timChain}
+                    />
+                  </Switch>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Paper className={classes.explorerPaper}>
+                  <Explorer chain={chain} />
+                </Paper>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <Paper className={classes.fullWidth}>Hallo Welt!</Paper>
-            </Grid>
-          </Grid>
+          </div>
         </div>
-      </div>
-    </Fragment>
-  );
+      </Fragment>
+    );
+  }
 }
 
 App.propTypes = {
