@@ -56,7 +56,7 @@ function TimBlockPaper(props) {
             <b>From address:</b>{" "}
             {element.fromAddress
               ? element.fromAddress
-              : "Im a mining reward and got no from address"}
+              : "Im a mining reward and got address of sender"}
           </Typography>
           <Typography>
             <b>To address:</b> {element.toAddress}

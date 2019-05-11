@@ -2,11 +2,8 @@ import React, { Fragment, PureComponent } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Paper from "@material-ui/core/Paper";
-import Switch from "react-router-dom/Switch";
 import Grid from "@material-ui/core/Grid";
-import withRouter from "react-router-dom/withRouter";
 import Navbar from "./components/navigation/Navbar";
-import PropsRoute from "./components/utils/PropsRoute";
 import Wallet from "./components/wallet/Wallet";
 import Explorer from "./components/explorer/Explorer";
 import Mine from "./components/mine/Mine";
@@ -41,11 +38,27 @@ const styles = theme => ({
 });
 
 class App extends PureComponent {
-  state = { timChain: null, chain: [] };
+  state = { timChain: null, chain: [], selectedTab: "Wallet" };
 
   updateChain = chain => {
     const copyChain = [...chain];
     this.setState({ chain: copyChain });
+  };
+
+  printContent = () => {
+    const { selectedTab, timChain } = this.state;
+    switch (selectedTab) {
+      case "Wallet":
+        return <Wallet timChain={timChain} />;
+      case "Mine":
+        return <Mine timChain={timChain} />;
+      default:
+        throw new Error("No branch selected in switch statement");
+    }
+  };
+
+  switchTab = selectedTab => {
+    this.setState({ selectedTab });
   };
 
   componentDidMount() {
@@ -54,30 +67,17 @@ class App extends PureComponent {
   }
 
   render() {
-    const { location, classes } = this.props;
-    const { timChain, chain } = this.state;
+    const { classes } = this.props;
+    const { chain } = this.state;
     return (
       <Fragment>
-        <Navbar />
+        <Navbar switchTab={this.switchTab} />
         <div className={classes.flexBox}>
           <div className={classes.contentWrapper}>
             <Grid container justify="space-between">
               <Grid item xs={12} md={7}>
                 <Paper className={classes.paperPaddingLeft}>
-                  <Switch>
-                    <PropsRoute
-                      location={location}
-                      path="/TIMCoin/mine"
-                      component={Mine}
-                      timChain={timChain}
-                    />
-                    <PropsRoute
-                      location={location}
-                      path="/TIMCoin/"
-                      component={Wallet}
-                      timChain={timChain}
-                    />
-                  </Switch>
+                  {this.printContent()}
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4}>
@@ -98,4 +98,4 @@ App.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withRouter(withStyles(styles, { withTheme: true })(App));
+export default withStyles(styles, { withTheme: true })(App);
