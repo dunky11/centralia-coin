@@ -35,14 +35,22 @@ class TimChain {
       miningRewardAddress,
       this.miningReward
     );
-    if (this.needsNewBlock) {
-      this.pendingTransactions.push(rewardTx);
+    if (this.needsNewBlock || this.pendingTransactions.length > 0) {
+      const transactions = [];
+      for (var i = 0; i < this.pendingTransactions.length; i++) {
+        let transaction = this.pendingTransactions[i];
+        if (transaction.isValid() && this.hasEnoughTimoshis(transaction)) {
+          transactions.push(transaction);
+        }
+      }
+      transactions.push(rewardTx);
       this.curBlock = new Block(
         Date.now(),
-        this.pendingTransactions,
+        transactions,
         this.getLatestBlock().hash,
         this.getLatestBlock().index + 1
       );
+      this.pendingTransactions = [];
       this.needsNewBlock = false;
     }
     if (!this.curBlock.mineBlock(this.difficulty, 150)) {
@@ -54,6 +62,19 @@ class TimChain {
     }
     this.pendingTransactions = [];
     this.needsNewBlock = true;
+    return true;
+  }
+
+  /**
+   * Prevent's transactions from wallets which have
+   * insufficient timoshis
+   */
+  hasEnoughTimoshis(transaction) {
+    if (
+      transaction.amount > this.getBalanceOfAddress(transaction.fromAddress)
+    ) {
+      return false;
+    }
     return true;
   }
 
