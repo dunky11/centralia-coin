@@ -2,23 +2,42 @@ const app = require("express")();
 const MongoClient = require("mongodb").MongoClient;
 
 const port = 4000;
+const client = new MongoClient("mongodb://localhost:27017", {
+  useUnifiedTopology: true
+});
 
-MongoClient.connect("mongodb://localhost:27017", function(err, client) {
-  if (err) return console.log(err);
+function getBlockchain(db, callback) {
+  db.collection("blocks")
+    .find()
+    .toArray((err, docs) => {
+      callback(docs);
+    });
+}
+
+client.connect(err => {
+  if (err) {
+    return err;
+  }
   db = client.db("centralia-coin");
-  blocks = db.collection("blocks");
 
-  app.get("/get-blockchain", function(req, res) {
-    res.send(blocks.find({}));
+  app.get("/get-blockchain", (req, res) => {
+    getBlockchain(db, docs => {
+      res.send(docs);
+    });
   });
 
-  app.post("/add-block", function(req, res) {
-    console.log(req);
-    res.send("add-block");
+  app.get("/insert-block", (req, res) => {
+    db.collection("blocks").insertOne(
+      { name: "tony", lastName: "doof" },
+      (err, result) => {
+        getBlockchain(db, docs => {
+          res.send(docs);
+        });
+      }
+    );
   });
 
-  app.listen(port, function() {
+  app.listen(port, () => {
     console.log(`Express server is listening on port ${port}!`);
   });
-  db.close();
 });
