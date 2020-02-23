@@ -32,16 +32,12 @@ class Block {
       counter++;
       this.hash = this.calculateHash();
     }
-    /**
-     * This function will be called after a timeout again, but
-     * we need some time so the browser can rest and the hash can be
-     */
     return true;
   }
 
   hasValidTransactions() {
-    for (const tx of this.transactions) {
-      if (!tx.isValid()) {
+    for (const transaction of this.transactions) {
+      if (!transaction.isValid()) {
         return false;
       }
     }
