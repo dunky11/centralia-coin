@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/static/js/main.de254526.chunk.js",
-    "main.js.map": "/static/js/main.de254526.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.206df7f3.js",
-    "runtime-main.js.map": "/static/js/runtime-main.206df7f3.js.map",
-    "static/js/2.9c5a6811.chunk.js": "/static/js/2.9c5a6811.chunk.js",
-    "static/js/2.9c5a6811.chunk.js.map": "/static/js/2.9c5a6811.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.270bca38a721181e6ba7fa249006590a.js": "/precache-manifest.270bca38a721181e6ba7fa249006590a.js",
-    "service-worker.js": "/service-worker.js",
-    "static/js/2.9c5a6811.chunk.js.LICENSE.txt": "/static/js/2.9c5a6811.chunk.js.LICENSE.txt"
+    "main.js": "/centralia-coin/static/js/main.88a3b5ba.chunk.js",
+    "main.js.map": "/centralia-coin/static/js/main.88a3b5ba.chunk.js.map",
+    "runtime-main.js": "/centralia-coin/static/js/runtime-main.81a3dfaa.js",
+    "runtime-main.js.map": "/centralia-coin/static/js/runtime-main.81a3dfaa.js.map",
+    "static/js/2.4a52f1b7.chunk.js": "/centralia-coin/static/js/2.4a52f1b7.chunk.js",
+    "static/js/2.4a52f1b7.chunk.js.map": "/centralia-coin/static/js/2.4a52f1b7.chunk.js.map",
+    "index.html": "/centralia-coin/index.html",
+    "precache-manifest.b012ad24938aa808c7ad44004c0d1d88.js": "/centralia-coin/precache-manifest.b012ad24938aa808c7ad44004c0d1d88.js",
+    "service-worker.js": "/centralia-coin/service-worker.js",
+    "static/js/2.4a52f1b7.chunk.js.LICENSE.txt": "/centralia-coin/static/js/2.4a52f1b7.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.206df7f3.js",
-    "static/js/2.9c5a6811.chunk.js",
-    "static/js/main.de254526.chunk.js"
+    "static/js/runtime-main.81a3dfaa.js",
+    "static/js/2.4a52f1b7.chunk.js",
+    "static/js/main.88a3b5ba.chunk.js"
   ]
 }
