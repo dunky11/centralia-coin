@@ -1,5 +1,11 @@
 const app = require("express")();
+const cors = require("cors");
+const formidable = require("express-formidable");
 const MongoClient = require("mongodb").MongoClient;
+
+app.use(formidable());
+
+app.use(cors());
 
 const basePath = "/centralia-coin";
 const port = 4000;
@@ -30,8 +36,8 @@ client.connect(err => {
   db = client.db("centralia-coin");
 
   app.get(`${basePath}/get-blockchain`, (req, res) => {
+    console.log(req);
     getBlockchainSize(db, size => {
-      console.log(size);
       getBlockchain(db, blocks => {
         res.send(blocks);
       });
@@ -39,14 +45,12 @@ client.connect(err => {
   });
 
   app.post(`${basePath}/add-block`, (req, res) => {
-    db.collection("blocks").insertOne(
-      { name: "tony", lastName: "doof" },
-      (err, result) => {
-        getBlockchain(db, docs => {
-          res.send(docs);
-        });
-      }
-    );
+    if (!req.fields.blockchain) {
+      res.status(400);
+      res.send();
+    }
+    const blockchain = JSON.parse(req.fields.blockchain);
+    res.send(blockchain);
   });
 
   app.listen(port, () => {

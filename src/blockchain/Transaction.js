@@ -1,4 +1,4 @@
-const SHA256 = require("crypto-js/sha256");
+import SHA256 from "crypto-js/sha256";
 const EC = require("elliptic").ec;
 const ec = new EC("secp256k1");
 
