@@ -10,8 +10,16 @@ const client = new MongoClient("mongodb://localhost:27017", {
 function getBlockchain(db, callback) {
   db.collection("blocks")
     .find({})
-    .toArray((_, docs) => {
-      callback(docs);
+    .toArray((_, blocks) => {
+      callback(blocks);
+    });
+}
+
+function getBlockchainSize(db, callback) {
+  db.collection("blocks")
+    .countDocuments({}, null)
+    .then(size => {
+      callback(size);
     });
 }
 
@@ -22,8 +30,11 @@ client.connect(err => {
   db = client.db("centralia-coin");
 
   app.get(`${basePath}/get-blockchain`, (req, res) => {
-    getBlockchain(db, docs => {
-      res.send(docs);
+    getBlockchainSize(db, size => {
+      console.log(size);
+      getBlockchain(db, blocks => {
+        res.send(blocks);
+      });
     });
   });
 
