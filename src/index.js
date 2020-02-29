@@ -7,10 +7,6 @@ import App from "./App";
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
-    <link
-      href="https://fonts.googleapis.com/css?family=Baloo+Bhaijaan|Roboto:300,400,500"
-      rel="stylesheet"
-    />
     <CssBaseline />
     <App />
   </MuiThemeProvider>,
