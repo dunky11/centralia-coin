@@ -7,17 +7,17 @@ import Navbar from "./components/navigation/Navbar";
 import Wallet from "./components/wallet/Wallet";
 import Explorer from "./components/explorer/Explorer";
 import Mine from "./components/mine/Mine";
-import TimChain from "./timchain/TimChain";
+import Blockchain from "./blockchain/Blockchain";
 
 const styles = theme => ({
   contentWrapper: {
     maxWidth: 1400,
     width: "100%",
-    marginLeft: theme.spacing.unit,
-    marginRiht: theme.spacing.unit
+    marginLeft: theme.spacing(1),
+    marginRiht: theme.spacing(1)
   },
   flexBox: {
-    marginTop: theme.spacing.unit * 8,
+    marginTop: theme.spacing(8),
     display: "flex",
     justifyContent: "center"
   },
@@ -25,20 +25,24 @@ const styles = theme => ({
     width: "100%"
   },
   paperPaddingLeft: {
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-    paddingLeft: theme.spacing.unit * 3,
-    paddingRight: theme.spacing.unit * 3,
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
     width: "100%"
   },
   explorerPaper: {
-    padding: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 4
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(4)
   }
 });
 
 class App extends PureComponent {
-  state = { timChain: null, chain: [], selectedTab: "Wallet" };
+  state = {
+    blockchain: new Blockchain(4, this.updateChain),
+    chain: [],
+    selectedTab: "Wallet"
+  };
 
   updateChain = chain => {
     const copyChain = [...chain];
@@ -46,12 +50,12 @@ class App extends PureComponent {
   };
 
   printContent = () => {
-    const { selectedTab, timChain } = this.state;
+    const { selectedTab, blockchain } = this.state;
     switch (selectedTab) {
       case "Wallet":
-        return <Wallet timChain={timChain} />;
+        return <Wallet blockchain={blockchain} />;
       case "Mine":
-        return <Mine timChain={timChain} />;
+        return <Mine blockchain={blockchain} />;
       default:
         throw new Error("No branch selected in switch statement");
     }
@@ -60,11 +64,6 @@ class App extends PureComponent {
   switchTab = selectedTab => {
     this.setState({ selectedTab });
   };
-
-  componentDidMount() {
-    const timChain = new TimChain(4, this.updateChain);
-    this.setState({ timChain });
-  }
 
   render() {
     const { classes } = this.props;

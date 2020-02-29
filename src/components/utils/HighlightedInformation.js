@@ -8,7 +8,7 @@ const styles = theme => ({
   main: {
     backgroundColor: "rgba(253, 200, 69, .2)",
     border: "2px solid rgba(253, 200, 69, .4)",
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     borderRadius: theme.shape.borderRadius
   }
 });

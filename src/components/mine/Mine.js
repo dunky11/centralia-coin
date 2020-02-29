@@ -4,25 +4,25 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import TimBlockPaper from "../utils/TimBlockPaper";
+import BlockPaper from "../utils/BlockPaper";
 
 const styles = theme => ({
   button: {
-    marginTop: theme.spacing.unit * 4
+    marginTop: theme.spacing(4)
   },
   curBlockPaper: {
-    marginTop: theme.spacing.unit
+    marginTop: theme.spacing(1)
   }
 });
 
 class Mine extends PureComponent {
   state = { pk: "", hash: "", mining: false, transactions: [] };
   startMining = () => {
-    const { timChain } = this.props;
+    const { blockchain } = this.props;
     const { pk, mining } = this.state;
     if (mining) {
-      timChain.minePendingTransactions(pk);
-      const { curBlock } = timChain;
+      blockchain.minePendingTransactions(pk);
+      const { curBlock } = blockchain;
       this.setState({
         index: curBlock.index,
         prevHash: curBlock.previousHash,
@@ -55,7 +55,7 @@ class Mine extends PureComponent {
     return (
       <Fragment>
         <Typography paragraph variant="h6">
-          Mine blocks to get timoshis
+          Mine blocks to get coins
         </Typography>
         <TextField
           value={pk}
@@ -70,7 +70,7 @@ class Mine extends PureComponent {
         />
         {mining && (
           <div className={classes.curBlockPaper}>
-            <TimBlockPaper
+            <BlockPaper
               index={index}
               hash={hash}
               prevHash={prevHash}
@@ -95,6 +95,6 @@ class Mine extends PureComponent {
   }
 }
 
-Mine.propTypes = { timChain: PropTypes.object };
+Mine.propTypes = { blockchain: PropTypes.object };
 
 export default withStyles(styles, { withTheme: true })(Mine);

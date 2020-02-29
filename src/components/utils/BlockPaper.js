@@ -5,17 +5,17 @@ import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
   paper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     overflowX: "hidden"
   },
   transactionPaper: {
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
     overflowX: "hidden",
-    marginTop: theme.spacing.unit
+    marginTop: theme.spacing(1)
   }
 });
 
-function TimBlockPaper(props) {
+function BlockPaper(props) {
   const {
     hash,
     prevHash,
@@ -68,7 +68,7 @@ function TimBlockPaper(props) {
               : "Mining rewards have no signature"}
           </Typography>
           <Typography>
-            <b>Timoshis:</b> {element.amount}
+            <b>Coins:</b> {element.amount}
           </Typography>
           <Typography>
             <b>Timestamp:</b> {element.timestamp}
@@ -79,4 +79,4 @@ function TimBlockPaper(props) {
   );
 }
 
-export default withStyles(styles, { withTheme: true })(TimBlockPaper);
+export default withStyles(styles, { withTheme: true })(BlockPaper);

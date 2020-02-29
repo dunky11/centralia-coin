@@ -3,28 +3,28 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Button from "@material-ui/core/Button";
-import Transaction from "../../timchain/Transaction";
+import Transaction from "../../blockchain/Transaction";
 import HighlightedInformation from "../utils/HighlightedInformation";
 
 const styles = theme => ({
   button: {
-    marginTop: theme.spacing.unit * 4
+    marginTop: theme.spacing(4)
   },
   highLightedInformation: {
-    marginTop: theme.spacing.unit * 2
+    marginTop: theme.spacing(2)
   }
 });
 
 class Balance extends PureComponent {
-  state = { pk: "", sk: "", timoshis: "", recPk: "", status: null };
+  state = { pk: "", sk: "", coins: "", recPk: "", status: null };
   makeTransaction = () => {
     this.setState({ status: null });
-    const { timChain } = this.props;
-    const { pk, recPk, sk, timoshis } = this.state;
-    const transaction = new Transaction(pk, recPk, parseInt(timoshis));
+    const { blockchain } = this.props;
+    const { pk, recPk, sk, coins } = this.state;
+    const transaction = new Transaction(pk, recPk, parseInt(coins));
     try {
       transaction.signTransaction(pk, sk);
-      timChain.addTransaction(transaction);
+      blockchain.addTransaction(transaction);
       this.setState({
         status: "Transaction will be in the next block if it's valid"
       });
@@ -42,11 +42,11 @@ class Balance extends PureComponent {
   };
   render() {
     const { classes } = this.props;
-    const { pk, sk, timoshis, recPk, status } = this.state;
+    const { pk, sk, coins, recPk, status } = this.state;
     return (
       <Fragment>
         <Typography paragraph variant="h6">
-          Transfer timoshis from one wallet to another
+          Transfer coins from one wallet to another
         </Typography>
         <TextField
           value={pk}
@@ -82,7 +82,7 @@ class Balance extends PureComponent {
           label="The recipient's wallet public key"
         />
         <TextField
-          value={timoshis}
+          value={coins}
           fullWidth
           variant="outlined"
           margin="normal"
@@ -91,10 +91,10 @@ class Balance extends PureComponent {
             if (isNaN(value)) {
               return;
             }
-            this.setState({ timoshis: event.target.value });
+            this.setState({ coins: event.target.value });
           }}
           multiline
-          label="Timoshis to send"
+          label="Coins to send"
         />
         {status && (
           <HighlightedInformation className={classes.highLightedInformation}>
@@ -106,7 +106,7 @@ class Balance extends PureComponent {
           fullWidth
           variant="contained"
           color="primary"
-          disabled={!pk || !sk || !recPk || !timoshis}
+          disabled={!pk || !sk || !recPk || !coins}
           onClick={this.makeTransaction}
         >
           Create Transaction

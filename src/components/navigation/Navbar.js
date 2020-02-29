@@ -11,7 +11,7 @@ const styles = theme => ({
     flexGrow: 1
   },
   marginRight: {
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing(1)
   },
   menuLink: {
     textDecoration: "none",
@@ -25,7 +25,7 @@ function Navbar(props) {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" color="inherit" className={classes.grow}>
-          <b>TimCOIN</b> - The not so decentralized cryptocurrency
+          <b>Centralia Coin</b> - The not so decentralized cryptocurrency
         </Typography>
         <Button
           color="inherit"

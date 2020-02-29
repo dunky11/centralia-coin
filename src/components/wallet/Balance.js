@@ -6,24 +6,24 @@ import Button from "@material-ui/core/Button";
 
 const styles = theme => ({
   button: {
-    marginTop: theme.spacing.unit * 4
+    marginTop: theme.spacing(4)
   }
 });
 
 class Balance extends PureComponent {
-  state = { timoshis: "", pk: "" };
+  state = { coins: "", pk: "" };
   checkBalance = () => {
-    const { timChain } = this.props;
+    const { blockchain } = this.props;
     const { pk } = this.state;
-    this.setState({ timoshis: timChain.getBalanceOfAddress(pk) });
+    this.setState({ coins: blockchain.getBalanceOfAddress(pk) });
   };
   render() {
     const { classes } = this.props;
-    const { pk, timoshis } = this.state;
+    const { pk, coins } = this.state;
     return (
       <Fragment>
         <Typography paragraph variant="h6">
-          Enter the public key of a wallet to find out it's timoshis
+          Enter the public key of a wallet to find out it's balance
         </Typography>
         <TextField
           value={pk}
@@ -37,7 +37,7 @@ class Balance extends PureComponent {
           label="Public Key"
         />
         <TextField
-          value={timoshis}
+          value={coins}
           fullWidth
           variant="outlined"
           margin="normal"
@@ -45,7 +45,7 @@ class Balance extends PureComponent {
             readOnly: true
           }}
           multiline
-          label="timoshis"
+          label="coins"
         />
         <Button
           fullWidth

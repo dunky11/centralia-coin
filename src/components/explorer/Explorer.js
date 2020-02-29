@@ -1,12 +1,12 @@
 import React, { PureComponent, Fragment } from "react";
 import PropTypes from "prop-types";
 import Typography from "@material-ui/core/Typography";
-import TimBlockPaper from "../utils/TimBlockPaper";
+import BlockPaper from "../utils/BlockPaper";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = theme => ({
   marginBottom: {
-    marginBottom: theme.spacing.unit
+    marginBottom: theme.spacing(1)
   }
 });
 
@@ -24,7 +24,7 @@ class Explorer extends PureComponent {
             className={index !== chain.length - 1 ? classes.marginBottom : null}
             key={element.timestamp}
           >
-            <TimBlockPaper
+            <BlockPaper
               index={element.index}
               prevHash={element.previousHash}
               hash={element.hash}

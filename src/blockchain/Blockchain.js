@@ -1,7 +1,7 @@
 import Transaction from "./Transaction";
 import Block from "./Block";
 
-class TimChain {
+class Blockchain {
   constructor(difficulty, updateChain = false) {
     this.updateChain = updateChain;
     const genesisBlock = this.createGenesisBlock();
@@ -17,12 +17,7 @@ class TimChain {
   needsNewBlock = true;
 
   createGenesisBlock() {
-    return new Block(
-      Date.now(),
-      [],
-      "Im the genesis block, i got no	predecessor",
-      0
-    );
+    return new Block(Date.now(), [], "", 0);
   }
 
   getLatestBlock() {
@@ -39,7 +34,7 @@ class TimChain {
       const transactions = [];
       for (var i = 0; i < this.pendingTransactions.length; i++) {
         let transaction = this.pendingTransactions[i];
-        if (transaction.isValid() && this.hasEnoughTimoshis(transaction)) {
+        if (transaction.isValid() && this.hasEnoughCoins(transaction)) {
           transactions.push(transaction);
         }
       }
@@ -67,9 +62,9 @@ class TimChain {
 
   /**
    * Prevent's transactions from wallets which have
-   * insufficient timoshis
+   * insufficient coins
    */
-  hasEnoughTimoshis(transaction) {
+  hasEnoughCoins(transaction) {
     if (
       transaction.amount > this.getBalanceOfAddress(transaction.fromAddress)
     ) {
@@ -149,4 +144,4 @@ class TimChain {
   }
 }
 
-export default TimChain;
+export default Blockchain;

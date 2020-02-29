@@ -3,11 +3,11 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Button from "@material-ui/core/Button";
-import generateKeyPair from "../../timchain/generateKeyPair";
+import generateKeyPair from "../../blockchain/generateKeyPair";
 
 const styles = theme => ({
   button: {
-    marginTop: theme.spacing.unit * 4
+    marginTop: theme.spacing(4)
   }
 });
 
@@ -25,7 +25,7 @@ class CreateWallet extends PureComponent {
     return (
       <Fragment>
         <Typography paragraph variant="h6">
-          Generate a keypair using secp256k1
+          Generate a keypair
         </Typography>
         <TextField
           value={pk}

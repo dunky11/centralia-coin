@@ -11,10 +11,10 @@ const styles = theme => ({
     display: "flex"
   },
   rightMargin: {
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing(1)
   },
   contentWrapper: {
-    marginTop: theme.spacing.unit * 3
+    marginTop: theme.spacing(3)
   }
 });
 
@@ -24,15 +24,15 @@ class Wallet extends PureComponent {
   };
 
   printContent = () => {
-    const { timChain } = this.props;
+    const { blockchain } = this.props;
     const { activeMenu } = this.state;
     switch (activeMenu) {
       case "Create Wallet":
         return <CreateWallet />;
       case "Balance":
-        return <Balance timChain={timChain} />;
+        return <Balance blockchain={blockchain} />;
       case "Make Transaction":
-        return <MakeTransaction timChain={timChain} />;
+        return <MakeTransaction blockchain={blockchain} />;
       default:
         throw new Error("No branch selected in switcht statement.");
     }
