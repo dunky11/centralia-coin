@@ -1,9 +1,6 @@
 import React, { PureComponent, Fragment } from "react";
 import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import { Typography, TextField, Button, withStyles } from "@material-ui/core";
 import BlockPaper from "../utils/BlockPaper";
 
 const styles = theme => ({
@@ -17,6 +14,7 @@ const styles = theme => ({
 
 class Mine extends PureComponent {
   state = { pk: "", hash: "", mining: false, transactions: [] };
+
   startMining = () => {
     const { blockchain } = this.props;
     const { pk, mining } = this.state;
@@ -34,14 +32,17 @@ class Mine extends PureComponent {
       window.setTimeout(this.startMining, 10);
     }
   };
+
   initMiningLoop = () => {
     this.setState({ mining: true }, this.startMining);
   };
+
   stopMiningLoop = () => {
     this.setState({ mining: false });
   };
+
   render() {
-    const { classes } = this.props;
+    const { classes, theme } = this.props;
     const {
       pk,
       mining,
@@ -69,16 +70,25 @@ class Mine extends PureComponent {
           label="Public key of wallet to reward"
         />
         {mining && (
-          <div className={classes.curBlockPaper}>
-            <BlockPaper
-              index={index}
-              hash={hash}
-              prevHash={prevHash}
-              nonce={nonce}
-              timestamp={timestamp}
-              transactions={transactions}
-            />
-          </div>
+          <Fragment>
+            <Typography
+              variant="h6"
+              style={{ marginTop: theme.spacing(1) }}
+              paragraph
+            >
+              Current block
+            </Typography>
+            <div className={classes.curBlockPaper}>
+              <BlockPaper
+                index={index}
+                hash={hash}
+                prevHash={prevHash}
+                nonce={nonce}
+                timestamp={timestamp}
+                transactions={transactions}
+              />
+            </div>
+          </Fragment>
         )}
         <Button
           fullWidth

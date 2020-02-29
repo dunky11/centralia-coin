@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  withStyles
+} from "@material-ui/core";
 
 const styles = theme => ({
   grow: {
@@ -25,7 +27,7 @@ function Navbar(props) {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" color="inherit" className={classes.grow}>
-          <b>Centralia Coin</b> - The not so decentralized cryptocurrency
+          Centralia Coin
         </Typography>
         <Button
           color="inherit"

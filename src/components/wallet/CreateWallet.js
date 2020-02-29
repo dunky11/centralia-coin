@@ -1,8 +1,5 @@
 import React, { PureComponent, Fragment } from "react";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Button from "@material-ui/core/Button";
+import { Typography, TextField, Button, withStyles } from "@material-ui/core";
 import generateKeyPair from "../../blockchain/generateKeyPair";
 
 const styles = theme => ({

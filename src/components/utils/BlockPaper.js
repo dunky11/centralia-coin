@@ -1,17 +1,12 @@
 import React from "react";
-import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
-  paper: {
-    padding: theme.spacing(2),
-    overflowX: "hidden"
-  },
-  transactionPaper: {
-    padding: theme.spacing(1),
+  bordered: {
+    border: "2px solid rgba(0, 0, 0, 0.13)",
     overflowX: "hidden",
-    marginTop: theme.spacing(1)
+    padding: theme.spacing(1)
   }
 });
 
@@ -23,10 +18,11 @@ function BlockPaper(props) {
     index,
     nonce,
     classes,
-    timestamp
+    timestamp,
+    theme
   } = props;
   return (
-    <Paper className={classes.paper}>
+    <div className={classes.bordered}>
       <Typography variant="body1">
         <b>Index:</b> {index}
       </Typography>
@@ -42,40 +38,38 @@ function BlockPaper(props) {
       <Typography variant="body1">
         <b>Timestamp:</b> {timestamp}
       </Typography>
-      <Typography variant="body1">
+      <Typography
+        variant="body1"
+        style={{
+          marginBottom: transactions.length >= 1 ? theme.spacing(1) : 0
+        }}
+      >
         <b>Transactions:</b>
       </Typography>
-      {transactions.map(element => (
-        <Paper
-          key={element.index}
-          className={classes.transactionPaper}
-          square
-          elevation={1}
-        >
+      {transactions.map(tx => (
+        <div className={classes.bordered} key={tx.index}>
           <Typography>
             <b>From address:</b>{" "}
-            {element.fromAddress
-              ? element.fromAddress
+            {tx.fromAddress
+              ? tx.fromAddress
               : "Mining rewards have no address of sender"}
           </Typography>
           <Typography>
-            <b>To address:</b> {element.toAddress}
+            <b>To address:</b> {tx.toAddress}
           </Typography>
           <Typography>
             <b>Signature:</b>{" "}
-            {element.signature
-              ? element.signature
-              : "Mining rewards have no signature"}
+            {tx.signature ? tx.signature : "Mining rewards have no signature"}
           </Typography>
           <Typography>
-            <b>Coins:</b> {element.amount}
+            <b>Coins:</b> {tx.amount}
           </Typography>
           <Typography>
-            <b>Timestamp:</b> {element.timestamp}
+            <b>Timestamp:</b> {tx.timestamp}
           </Typography>
-        </Paper>
+        </div>
       ))}
-    </Paper>
+    </div>
   );
 }
 

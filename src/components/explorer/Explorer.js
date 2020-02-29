@@ -1,40 +1,56 @@
-import React, { PureComponent, Fragment } from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import Typography from "@material-ui/core/Typography";
+import { Box, Paper, Typography, withStyles } from "@material-ui/core";
+import { Pagination } from "@material-ui/lab";
 import BlockPaper from "../utils/BlockPaper";
-import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = theme => ({
-  marginBottom: {
-    marginBottom: theme.spacing(1)
+  paper: {
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(4)
   }
 });
 
 class Explorer extends PureComponent {
-  state = {};
+  state = { page: 1 };
+  pageSize = 10;
+
+  onPaginationChange = (_, page) => {
+    this.setState({ page });
+  };
+
   render() {
     const { chain, classes } = this.props;
+    const { page } = this.state;
     return (
-      <Fragment>
-        <Typography paragraph variant="body1">
-          <b>The blockchain</b>
+      <Paper className={classes.paper}>
+        <Typography paragraph variant="h6">
+          The blockchain
         </Typography>
-        {chain.map((element, index) => (
-          <div
-            className={index !== chain.length - 1 ? classes.marginBottom : null}
-            key={element.timestamp}
-          >
-            <BlockPaper
-              index={element.index}
-              prevHash={element.previousHash}
-              hash={element.hash}
-              nonce={element.nonce}
-              timestamp={element.timestamp}
-              transactions={element.transactions}
-            />
-          </div>
-        ))}
-      </Fragment>
+        {[...chain]
+          .reverse()
+          .slice((page - 1) * this.pageSize, page * this.pageSize)
+          .map((element, index) => (
+            <Box mb={index !== chain.length - 1 ? 1 : 0} key={element.index}>
+              <BlockPaper
+                index={element.index}
+                prevHash={element.previousHash}
+                hash={element.hash}
+                nonce={element.nonce}
+                timestamp={element.timestamp}
+                transactions={element.transactions}
+              />
+            </Box>
+          ))}
+        <Box mt={2}>
+          <Pagination
+            count={Math.ceil(chain.length / this.pageSize)}
+            defaultPage={1}
+            page={page}
+            onChange={this.onPaginationChange}
+          />
+        </Box>
+      </Paper>
     );
   }
 }

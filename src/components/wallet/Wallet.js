@@ -1,7 +1,6 @@
 import React, { PureComponent, Fragment } from "react";
 import PropTypes from "prop-types";
-import Button from "@material-ui/core/Button";
-import withStyles from "@material-ui/core/styles/withStyles";
+import { Button, withStyles } from "@material-ui/core";
 import Balance from "./Balance";
 import CreateWallet from "./CreateWallet";
 import MakeTransaction from "./MakeTransaction";

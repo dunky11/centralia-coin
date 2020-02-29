@@ -1,8 +1,5 @@
 import React, { PureComponent, Fragment } from "react";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Button from "@material-ui/core/Button";
+import { Typography, TextField, Button, withStyles } from "@material-ui/core";
 
 const styles = theme => ({
   button: {
@@ -45,7 +42,7 @@ class Balance extends PureComponent {
             readOnly: true
           }}
           multiline
-          label="coins"
+          label="Coins"
         />
         <Button
           fullWidth

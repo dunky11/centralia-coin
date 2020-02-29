@@ -1,8 +1,6 @@
 import React, { Fragment, PureComponent } from "react";
 import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
+import { Paper, Grid, withStyles } from "@material-ui/core";
 import Navbar from "./components/navigation/Navbar";
 import Wallet from "./components/wallet/Wallet";
 import Explorer from "./components/explorer/Explorer";
@@ -30,22 +28,23 @@ const styles = theme => ({
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
     width: "100%"
-  },
-  explorerPaper: {
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(4)
   }
 });
 
 class App extends PureComponent {
   state = {
-    blockchain: new Blockchain(4, this.updateChain),
+    blockchain: null,
     chain: [],
     selectedTab: "Wallet"
   };
 
+  componentDidMount() {
+    this.setState({ blockchain: new Blockchain(4, this.updateChain) });
+  }
+
   updateChain = chain => {
     const copyChain = [...chain];
+    console.log("called");
     this.setState({ chain: copyChain });
   };
 
@@ -80,9 +79,7 @@ class App extends PureComponent {
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4}>
-                <Paper className={classes.explorerPaper}>
-                  <Explorer chain={chain} />
-                </Paper>
+                <Explorer chain={chain} />
               </Grid>
             </Grid>
           </div>
@@ -93,7 +90,6 @@ class App extends PureComponent {
 }
 
 App.propTypes = {
-  location: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired
 };
 
