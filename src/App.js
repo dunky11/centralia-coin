@@ -44,8 +44,29 @@ class App extends PureComponent {
 
   updateChain = chain => {
     const copyChain = [...chain];
-    console.log("called");
     this.setState({ chain: copyChain });
+  };
+
+  validateChain = async () => {
+    return new Promise((resolve, reject) => {
+      const { chain } = this.state;
+      const ajax = new XMLHttpRequest();
+      const formData = new FormData();
+      console.log(chain);
+      formData.append("blockchain", "Hallo Welt!");
+      ajax.open(
+        "POST",
+        "https://h2867975.stratoserver.net/centralia-coin/add-block"
+      );
+      ajax.onload = () => {
+        console.log(ajax.responseText);
+        resolve();
+      };
+      ajax.onerror = () => {
+        reject();
+      };
+      ajax.send(formData);
+    });
   };
 
   printContent = () => {
@@ -54,7 +75,9 @@ class App extends PureComponent {
       case "Wallet":
         return <Wallet blockchain={blockchain} />;
       case "Mine":
-        return <Mine blockchain={blockchain} />;
+        return (
+          <Mine blockchain={blockchain} validateChain={this.validateChain} />
+        );
       default:
         throw new Error("No branch selected in switch statement");
     }

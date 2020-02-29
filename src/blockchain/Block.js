@@ -36,8 +36,8 @@ class Block {
   }
 
   hasValidTransactions() {
-    for (const transaction of this.transactions) {
-      if (!transaction.isValid()) {
+    for (const tx of this.transactions) {
+      if (!tx.isValid()) {
         return false;
       }
     }

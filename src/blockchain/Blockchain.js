@@ -2,8 +2,9 @@ import Transaction from "./Transaction";
 import Block from "./Block";
 
 class Blockchain {
-  constructor(difficulty, updateChain = false) {
+  constructor(difficulty, updateChain = false, isServer = false) {
     this.updateChain = updateChain;
+    this.isServer = isServer;
     const genesisBlock = this.createGenesisBlock();
     if (this.updateChain) {
       this.updateChain([genesisBlock]);
@@ -31,17 +32,17 @@ class Blockchain {
       this.miningReward
     );
     if (this.needsNewBlock || this.pendingTransactions.length > 0) {
-      const transactions = [];
+      const txs = [];
       for (var i = 0; i < this.pendingTransactions.length; i++) {
-        let transaction = this.pendingTransactions[i];
-        if (transaction.isValid() && this.hasEnoughCoins(transaction)) {
-          transactions.push(transaction);
+        let tx = this.pendingTransactions[i];
+        if (tx.isValid() && this.hasEnoughCoins(tx)) {
+          txs.push(tx);
         }
       }
-      transactions.push(rewardTx);
+      txs.push(rewardTx);
       this.curBlock = new Block(
         Date.now(),
-        transactions,
+        txs,
         this.getLatestBlock().hash,
         this.getLatestBlock().index + 1
       );

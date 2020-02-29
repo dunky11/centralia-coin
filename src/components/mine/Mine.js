@@ -15,20 +15,23 @@ const styles = theme => ({
 class Mine extends PureComponent {
   state = { pk: "", hash: "", mining: false, transactions: [] };
 
-  startMining = () => {
-    const { blockchain } = this.props;
+  startMining = async () => {
+    const { blockchain, validateChain } = this.props;
     const { pk, mining } = this.state;
+    const minedNewBlock = blockchain.minePendingTransactions(pk);
+    if (minedNewBlock) {
+      await validateChain();
+    }
+    const { curBlock } = blockchain;
+    this.setState({
+      index: curBlock.index,
+      prevHash: curBlock.previousHash,
+      hash: curBlock.hash,
+      nonce: curBlock.nonce,
+      timestamp: curBlock.timestamp,
+      transactions: curBlock.transactions
+    });
     if (mining) {
-      blockchain.minePendingTransactions(pk);
-      const { curBlock } = blockchain;
-      this.setState({
-        index: curBlock.index,
-        prevHash: curBlock.previousHash,
-        hash: curBlock.hash,
-        nonce: curBlock.nonce,
-        timestamp: curBlock.timestamp,
-        transactions: curBlock.transactions
-      });
       window.setTimeout(this.startMining, 10);
     }
   };
@@ -105,6 +108,9 @@ class Mine extends PureComponent {
   }
 }
 
-Mine.propTypes = { blockchain: PropTypes.object };
+Mine.propTypes = {
+  blockchain: PropTypes.object,
+  validateChain: PropTypes.func.isRequired
+};
 
 export default withStyles(styles, { withTheme: true })(Mine);

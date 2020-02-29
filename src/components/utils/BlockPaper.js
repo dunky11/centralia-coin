@@ -46,20 +46,17 @@ function BlockPaper(props) {
       >
         <b>Transactions:</b>
       </Typography>
-      {transactions.map(tx => (
-        <div className={classes.bordered} key={tx.index}>
+      {transactions.map((tx, index) => (
+        <div className={classes.bordered} key={index}>
           <Typography>
             <b>From address:</b>{" "}
-            {tx.fromAddress
-              ? tx.fromAddress
-              : "Mining rewards have no address of sender"}
+            {tx.fromAddress ? tx.fromAddress : "Mining reward"}
           </Typography>
           <Typography>
             <b>To address:</b> {tx.toAddress}
           </Typography>
           <Typography>
-            <b>Signature:</b>{" "}
-            {tx.signature ? tx.signature : "Mining rewards have no signature"}
+            <b>Signature:</b> {tx.signature ? tx.signature : "Mining reward"}
           </Typography>
           <Typography>
             <b>Coins:</b> {tx.amount}
