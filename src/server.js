@@ -18,21 +18,24 @@ const client = new MongoClient("mongodb://localhost:27017", {
 
 function getBlockchain(db, callback) {
   db.collection("blocks")
-    .find({})
+    .find({}, { _id: false })
+    .sort({ index: 1 })
     .toArray((_, blocks) => {
       callback(blocks);
     });
 }
 
-/*
-function getBlockchainSize(db, callback) {
+function synchronizeChain(db, chain, callback) {
   db.collection("blocks")
-    .countDocuments({}, null)
-    .then(size => {
-      callback(size);
+    .deleteMany({})
+    .then(() => {
+      db.collection("blocks")
+        .insert(chain)
+        .then(() => {
+          callback();
+        });
     });
 }
-*/
 
 client.connect(err => {
   if (err) {
@@ -41,11 +44,8 @@ client.connect(err => {
   db = client.db("centralia-coin");
 
   app.get(`${basePath}/get-blockchain`, (req, res) => {
-    console.log(req);
-    getBlockchainSize(db, size => {
-      getBlockchain(db, blocks => {
-        res.send(blocks);
-      });
+    getBlockchain(db, blocks => {
+      res.send(blocks);
     });
   });
 
@@ -61,18 +61,11 @@ client.connect(err => {
         blockchain.isChainValid() &&
         blockchain.chain.length > blocks.length
       ) {
-        console.log("isValid");
-        /**
-         *  synchronizeBlockchain(db, () => {
-          res.send(JSON.stringify(blockchain));
+        synchronizeChain(db, blockchain.chain, () => {
+          res.send(JSON.stringify(blockchain.chain));
         });
-         */
-        res.send(JSON.stringify(blockchain.chain));
       } else {
-        console.log(blockchain.isChainValid());
-        console.log(blockchain.chain.length);
-        console.log(blocks.length);
-        console.log("invalid");
+        console.log(blocks);
         res.send(JSON.stringify(blocks));
       }
     });
