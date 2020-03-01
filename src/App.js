@@ -9,10 +9,14 @@ import Blockchain from "./blockchain/Blockchain";
 
 const styles = theme => ({
   contentWrapper: {
-    maxWidth: 1400,
+    maxWidth: 1600,
     width: "100%",
-    marginLeft: theme.spacing(1),
-    marginRiht: theme.spacing(1)
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+    [theme.breakpoints.down("xs")]: {
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1)
+    }
   },
   flexBox: {
     marginTop: theme.spacing(8),
@@ -23,11 +27,16 @@ const styles = theme => ({
     width: "100%"
   },
   paperPaddingLeft: {
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3),
+    padding: theme.spacing(2),
     width: "100%"
+  },
+  leftContent: {
+    [theme.breakpoints.down("md")]: {
+      marginBottom: theme.spacing(3)
+    },
+    [theme.breakpoints.down("xs")]: {
+      marginBottom: theme.spacing(1)
+    }
   }
 });
 
@@ -52,8 +61,7 @@ class App extends PureComponent {
       const { chain } = this.state;
       const ajax = new XMLHttpRequest();
       const formData = new FormData();
-      console.log(chain);
-      formData.append("blockchain", "Hallo Welt!");
+      formData.append("blockchain", JSON.stringify(chain));
       ajax.open(
         "POST",
         "https://h2867975.stratoserver.net/centralia-coin/add-block"
@@ -96,7 +104,7 @@ class App extends PureComponent {
         <div className={classes.flexBox}>
           <div className={classes.contentWrapper}>
             <Grid container justify="space-between">
-              <Grid item xs={12} md={7}>
+              <Grid item xs={12} md={7} className={classes.leftContent}>
                 <Paper className={classes.paperPaddingLeft}>
                   {this.printContent()}
                 </Paper>
