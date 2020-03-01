@@ -1,5 +1,5 @@
-import Transaction from "./Transaction";
-import Block from "./Block";
+const Transaction = require("./Transaction").default;
+const Block = require("./Block").default;
 
 class Blockchain {
   constructor(difficulty, updateChain = false, isServer = false) {
@@ -145,4 +145,4 @@ class Blockchain {
   }
 }
 
-export default Blockchain;
+module.exports = { default: Blockchain };

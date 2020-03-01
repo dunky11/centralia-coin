@@ -1,6 +1,6 @@
-import Blockchain from "./blockchain";
-import Transaction from "./Transaction";
-import Block from "./Block";
+const Blockchain = require("./Blockchain").default;
+const Transaction = require("./Transaction").default;
+const Block = require("./Block").default;
 
 function jsonToBlockchain(jsonString, updateChain, isServer) {
   const blockchain = new Blockchain(4, updateChain, isServer);
@@ -26,3 +26,7 @@ function jsonToBlockchain(jsonString, updateChain, isServer) {
   }
   return blockchain;
 }
+
+module.exports = {
+  default: jsonToBlockchain
+};

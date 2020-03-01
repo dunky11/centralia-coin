@@ -1,7 +1,10 @@
-const app = require("express")();
-const cors = require("cors");
+const express = require("express");
 const formidable = require("express-formidable");
+const cors = require("cors");
 const MongoClient = require("mongodb").MongoClient;
+const jsonToBlockchain = require("./blockchain/jsonToBlockchain").default;
+
+const app = express();
 
 app.use(formidable());
 
