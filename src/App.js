@@ -6,6 +6,7 @@ import Wallet from "./components/wallet/Wallet";
 import Explorer from "./components/explorer/Explorer";
 import Mine from "./components/mine/Mine";
 import Blockchain from "./blockchain/Blockchain";
+import jsonToBlockchain from "./blockchain/jsonToBlockchain";
 
 const styles = theme => ({
   contentWrapper: {
@@ -48,7 +49,7 @@ class App extends PureComponent {
   };
 
   componentDidMount() {
-    this.setState({ blockchain: new Blockchain(4, this.updateChain) });
+    this.setState({ blockchain: new Blockchain.default(4, this.updateChain) });
   }
 
   updateChain = chain => {
@@ -67,7 +68,8 @@ class App extends PureComponent {
         "https://h2867975.stratoserver.net/centralia-coin/add-block"
       );
       ajax.onload = () => {
-        console.log(ajax.responseText);
+        const blockchain = jsonToBlockchain.default(ajax.responseText);
+        this.setState({ blockchain: blockchain, chain: blockchain.chain });
         resolve();
       };
       ajax.onerror = () => {

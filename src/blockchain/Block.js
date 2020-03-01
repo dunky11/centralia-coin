@@ -1,4 +1,4 @@
-import SHA256 from "crypto-js/sha256";
+const SHA256 = require("crypto-js/sha256");
 
 class Block {
   constructor(timestamp, transactions, previousHash = "", index = 0) {
@@ -45,4 +45,4 @@ class Block {
   }
 }
 
-export default Block;
+module.exports = { default: Block };
