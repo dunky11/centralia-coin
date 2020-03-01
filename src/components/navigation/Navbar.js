@@ -9,8 +9,10 @@ import {
 } from "@material-ui/core";
 
 const styles = theme => ({
-  grow: {
-    flexGrow: 1
+  logo: {
+    flexGrow: 1,
+    fontFamily: "Rubik",
+    fontWeight: 700
   },
   marginRight: {
     marginRight: theme.spacing(1)
@@ -26,7 +28,7 @@ function Navbar(props) {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" color="inherit" className={classes.grow}>
+        <Typography variant="h6" color="inherit" className={classes.logo}>
           Centralia Coin
         </Typography>
         <Button
