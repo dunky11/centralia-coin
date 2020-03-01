@@ -5,7 +5,9 @@ import {
   Toolbar,
   Typography,
   Button,
-  withStyles
+  isWidthDown,
+  withStyles,
+  withWidth
 } from "@material-ui/core";
 
 const styles = theme => ({
@@ -24,11 +26,15 @@ const styles = theme => ({
 });
 
 function Navbar(props) {
-  const { classes, switchTab } = props;
+  const { classes, switchTab, width } = props;
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" color="inherit" className={classes.logo}>
+        <Typography
+          variant={isWidthDown("sm", width) ? "h6" : "h5"}
+          color="inherit"
+          className={classes.logo}
+        >
           Centralia Coin
         </Typography>
         <Button
@@ -60,4 +66,4 @@ Navbar.propTypes = {
   switchTab: PropTypes.func.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(Navbar);
+export default withWidth()(withStyles(styles, { withTheme: true })(Navbar));
