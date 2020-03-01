@@ -3,16 +3,22 @@ const Transaction = require("./Transaction").default;
 const Block = require("./Block").default;
 
 function jsonToBlockchain(jsonString, updateChain, isServer) {
-  const blockchain = new Blockchain(4, updateChain, isServer);
-  const blockchainEnc = JSON.stringify(jsonString);
-  for (block in blockchainEnc) {
+  const blockchainEnc = JSON.parse(jsonString);
+  const blockchain = new Blockchain(
+    4,
+    updateChain,
+    isServer,
+    blockchainEnc[0].timestamp
+  );
+  for (const block of blockchainEnc) {
     const txs = [];
-    for (tx in blockchainEnc.transactions) {
+    for (const tx of block.transactions) {
       const curTx = new Transaction(null, null, null);
       curTx.fromAddress = tx.fromAddress;
       curTx.toAddress = tx.toAddress;
       curTx.amount = tx.amount;
       curTx.timestamp = tx.timestamp;
+      curTx.signature = tx.signature;
       txs.push(curTx);
     }
     const curBlock = new Block(null, null, null, null);

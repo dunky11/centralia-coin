@@ -52,7 +52,9 @@ client.connect(err => {
       res.status(400);
       res.send();
     }
-    const blockchain = JSON.parse(req.fields.blockchain);
+    const blockchain = jsonToBlockchain(req.fields.blockchain);
+    console.log(blockchain);
+    console.log(blockchain.isChainValid());
     res.send(blockchain);
   });
 

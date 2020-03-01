@@ -2,10 +2,17 @@ const Transaction = require("./Transaction").default;
 const Block = require("./Block").default;
 
 class Blockchain {
-  constructor(difficulty, updateChain = false, isServer = false) {
+  constructor(
+    difficulty,
+    updateChain = false,
+    isServer = false,
+    timestamp = false
+  ) {
     this.updateChain = updateChain;
     this.isServer = isServer;
-    const genesisBlock = this.createGenesisBlock();
+    const genesisBlock = this.createGenesisBlock(
+      timestamp ? timestamp : Date.now()
+    );
     if (this.updateChain) {
       this.updateChain([genesisBlock]);
     }
@@ -17,8 +24,8 @@ class Blockchain {
 
   needsNewBlock = true;
 
-  createGenesisBlock() {
-    return new Block(Date.now(), [], "", 0);
+  createGenesisBlock(timestamp) {
+    return new Block(timestamp, [], "", 0);
   }
 
   getLatestBlock() {
@@ -123,9 +130,9 @@ class Blockchain {
   }
 
   isChainValid() {
-    const realGenesis = JSON.stringify(this.createGenesisBlock());
-
-    if (realGenesis !== JSON.stringify(this.chain[0])) {
+    const realGenesis = this.createGenesisBlock(this.chain[0].timestamp);
+    realGenesis.timestamp = this.chain[0].timestamp;
+    if (JSON.stringify(realGenesis) !== JSON.stringify(this.chain[0])) {
       return false;
     }
 
@@ -133,10 +140,12 @@ class Blockchain {
       const currentBlock = this.chain[i];
 
       if (!currentBlock.hasValidTransactions()) {
+        console.log("Invalid transactions");
         return false;
       }
 
       if (currentBlock.hash !== currentBlock.calculateHash()) {
+        console.log("Invalid hash");
         return false;
       }
     }
