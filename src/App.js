@@ -5,8 +5,8 @@ import Navbar from "./components/navigation/Navbar";
 import Wallet from "./components/wallet/Wallet";
 import Explorer from "./components/explorer/Explorer";
 import Mine from "./components/mine/Mine";
-import Blockchain from "./blockchain/Blockchain";
 import jsonToBlockchain from "./blockchain/jsonToBlockchain";
+const Blockchain = require("./blockchain/Blockchain").default;
 
 const styles = theme => ({
   contentWrapper: {
@@ -69,7 +69,7 @@ class App extends PureComponent {
       } else {
         console.log("invalid chain came back");
         this.setState({
-          blockchain: new Blockchain.default(4, this.updateChain)
+          blockchain: new Blockchain(4, this.updateChain)
         });
       }
     };
