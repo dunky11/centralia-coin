@@ -11,12 +11,14 @@ class Block {
   }
 
   calculateHash() {
+    let txStr = "";
+    if (this.transactions) {
+      for (const tx of this.transactions) {
+        txStr += tx.calculateHash();
+      }
+    }
     return SHA256(
-      this.previousHash +
-        this.timestamp +
-        JSON.stringify(this.transactions) +
-        this.nonce +
-        this.index
+      this.previousHash + this.timestamp + txStr + this.nonce + this.index
     ).toString();
   }
 

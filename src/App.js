@@ -49,8 +49,32 @@ class App extends PureComponent {
   };
 
   componentDidMount() {
-    this.setState({ blockchain: new Blockchain.default(4, this.updateChain) });
+    this.fetchBlochchain();
   }
+
+  fetchBlochchain = () => {
+    const ajax = new XMLHttpRequest();
+    ajax.open(
+      "GET",
+      `https://h2867975.stratoserver.net/centralia-coin/get-blockchain?cb=${Date.now()}`
+    );
+    ajax.onload = () => {
+      const blockchain = jsonToBlockchain.default(
+        ajax.responseText,
+        this.updateChain
+      );
+      if (blockchain.chain.length > 0) {
+        console.log("valid chain came back");
+        this.setState({ blockchain: blockchain, chain: blockchain.chain });
+      } else {
+        console.log("invalid chain came back");
+        this.setState({
+          blockchain: new Blockchain.default(4, this.updateChain)
+        });
+      }
+    };
+    ajax.send();
+  };
 
   updateChain = chain => {
     const copyChain = [...chain];
@@ -68,13 +92,14 @@ class App extends PureComponent {
         "https://h2867975.stratoserver.net/centralia-coin/add-block"
       );
       ajax.onload = () => {
-        const blockchain = jsonToBlockchain.default(ajax.responseText);
+        const blockchain = jsonToBlockchain.default(
+          ajax.responseText,
+          this.updateChain
+        );
         this.setState({ blockchain: blockchain, chain: blockchain.chain });
         resolve();
       };
-      ajax.onerror = () => {
-        reject();
-      };
+      ajax.onerror = reject;
       ajax.send(formData);
     });
   };
