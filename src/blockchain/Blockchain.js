@@ -2,14 +2,8 @@ const Transaction = require("./Transaction").default;
 const Block = require("./Block").default;
 
 class Blockchain {
-  constructor(
-    difficulty,
-    updateChain = false,
-    isServer = false,
-    timestamp = false
-  ) {
+  constructor(difficulty, updateChain = false, timestamp = false) {
     this.updateChain = updateChain;
-    this.isServer = isServer;
     const genesisBlock = this.createGenesisBlock(
       timestamp ? timestamp : Date.now()
     );
@@ -145,7 +139,8 @@ class Blockchain {
       }
 
       if (currentBlock.hash !== currentBlock.calculateHash()) {
-        console.log("Invalid hash");
+        console.log("invalid hash");
+        console.log(currentBlock);
         return false;
       }
     }

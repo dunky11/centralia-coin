@@ -18,19 +18,19 @@ const client = new MongoClient("mongodb://localhost:27017", {
 
 function getBlockchain(db, callback) {
   db.collection("blocks")
-    .find({}, { _id: false })
+    .find({}, { projection: { _id: false } })
     .sort({ index: 1 })
-    .toArray((_, blocks) => {
-      callback(blocks);
+    .toArray((_, blockchain) => {
+      callback(blockchain);
     });
 }
 
-function synchronizeChain(db, chain, callback) {
+function synchronizeChain(db, blocks, callback) {
   db.collection("blocks")
     .deleteMany({})
     .then(() => {
       db.collection("blocks")
-        .insert(chain)
+        .insertMany(blocks)
         .then(() => {
           callback();
         });
@@ -45,7 +45,7 @@ client.connect(err => {
 
   app.get(`${basePath}/get-blockchain`, (req, res) => {
     getBlockchain(db, blocks => {
-      res.send(blocks);
+      res.send(JSON.stringify(blocks));
     });
   });
 

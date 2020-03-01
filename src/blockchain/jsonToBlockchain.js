@@ -2,15 +2,13 @@ const Blockchain = require("./Blockchain").default;
 const Transaction = require("./Transaction").default;
 const Block = require("./Block").default;
 
-function jsonToBlockchain(jsonString, updateChain, isServer) {
-  const blockchainEnc = JSON.parse(jsonString);
-  const blockchain = new Blockchain(
-    4,
-    updateChain,
-    isServer,
-    blockchainEnc[0].timestamp
-  );
-  for (const block of blockchainEnc) {
+function jsonToBlockchain(jsonString, updateChain) {
+  const blockchainDec = JSON.parse(jsonString);
+  if (blockchainDec.length === 0) {
+    return { chain: [] };
+  }
+  const blockchain = new Blockchain(4, updateChain, blockchainDec[0].timestamp);
+  for (const block of blockchainDec) {
     /** Skip genesis block */
     if (block.index === 0) {
       continue;
