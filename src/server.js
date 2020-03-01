@@ -24,6 +24,7 @@ function getBlockchain(db, callback) {
     });
 }
 
+/*
 function getBlockchainSize(db, callback) {
   db.collection("blocks")
     .countDocuments({}, null)
@@ -31,6 +32,7 @@ function getBlockchainSize(db, callback) {
       callback(size);
     });
 }
+*/
 
 client.connect(err => {
   if (err) {
@@ -53,9 +55,27 @@ client.connect(err => {
       res.send();
     }
     const blockchain = jsonToBlockchain(req.fields.blockchain);
-    console.log(blockchain);
-    console.log(blockchain.isChainValid());
-    res.send(blockchain);
+
+    getBlockchain(db, blocks => {
+      if (
+        blockchain.isChainValid() &&
+        blockchain.chain.length > blocks.length
+      ) {
+        console.log("isValid");
+        /**
+         *  synchronizeBlockchain(db, () => {
+          res.send(JSON.stringify(blockchain));
+        });
+         */
+        res.send(JSON.stringify(blockchain.chain));
+      } else {
+        console.log(blockchain.isChainValid());
+        console.log(blockchain.chain.length);
+        console.log(blocks.length);
+        console.log("invalid");
+        res.send(JSON.stringify(blocks));
+      }
+    });
   });
 
   app.listen(port, () => {

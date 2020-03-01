@@ -11,6 +11,10 @@ function jsonToBlockchain(jsonString, updateChain, isServer) {
     blockchainEnc[0].timestamp
   );
   for (const block of blockchainEnc) {
+    /** Skip genesis block */
+    if (block.index === 0) {
+      continue;
+    }
     const txs = [];
     for (const tx of block.transactions) {
       const curTx = new Transaction(null, null, null);
