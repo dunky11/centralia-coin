@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/centralia-coin/static/js/main.ebfc33ad.chunk.js",
-    "main.js.map": "/centralia-coin/static/js/main.ebfc33ad.chunk.js.map",
+    "main.js": "/centralia-coin/static/js/main.64ab6975.chunk.js",
+    "main.js.map": "/centralia-coin/static/js/main.64ab6975.chunk.js.map",
     "runtime-main.js": "/centralia-coin/static/js/runtime-main.81a3dfaa.js",
     "runtime-main.js.map": "/centralia-coin/static/js/runtime-main.81a3dfaa.js.map",
     "static/js/2.b84323a9.chunk.js": "/centralia-coin/static/js/2.b84323a9.chunk.js",
     "static/js/2.b84323a9.chunk.js.map": "/centralia-coin/static/js/2.b84323a9.chunk.js.map",
     "index.html": "/centralia-coin/index.html",
-    "precache-manifest.f74b65630d7225a7a8c3bc522465c52f.js": "/centralia-coin/precache-manifest.f74b65630d7225a7a8c3bc522465c52f.js",
+    "precache-manifest.83058c9e48aff0ed8993ed5c07bbed96.js": "/centralia-coin/precache-manifest.83058c9e48aff0ed8993ed5c07bbed96.js",
     "service-worker.js": "/centralia-coin/service-worker.js",
     "static/js/2.b84323a9.chunk.js.LICENSE.txt": "/centralia-coin/static/js/2.b84323a9.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.81a3dfaa.js",
     "static/js/2.b84323a9.chunk.js",
-    "static/js/main.ebfc33ad.chunk.js"
+    "static/js/main.64ab6975.chunk.js"
   ]
 }

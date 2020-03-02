@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a3b115e0387fa6d1e0a944b89f5ca7b3",
+    "revision": "05c2c994bac8864a06b7839372f9e6d5",
     "url": "/centralia-coin/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/centralia-coin/static/js/2.b84323a9.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "68b749f74a9ce9bda7d2",
-    "url": "/centralia-coin/static/js/main.ebfc33ad.chunk.js"
+    "revision": "62db23a70d3b10ada01e",
+    "url": "/centralia-coin/static/js/main.64ab6975.chunk.js"
   },
   {
     "revision": "f269e4a4a5c80992e947",

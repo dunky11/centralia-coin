@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/centralia-coin/precache-manifest.f74b65630d7225a7a8c3bc522465c52f.js"
+  "/centralia-coin/precache-manifest.83058c9e48aff0ed8993ed5c07bbed96.js"
 );
 
 self.addEventListener('message', (event) => {
