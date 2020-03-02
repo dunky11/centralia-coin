@@ -6,7 +6,7 @@ import Wallet from "./components/wallet/Wallet";
 import Explorer from "./components/explorer/Explorer";
 import Mine from "./components/mine/Mine";
 import jsonToBlockchain from "./blockchain/jsonToBlockchain";
-const Blockchain = require("./blockchain/Blockchain");
+import Blockchain from "./blockchain/Blockchain";
 
 const styles = theme => ({
   contentWrapper: {
