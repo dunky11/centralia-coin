@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from "react";
 import { Typography, TextField, Button, withStyles } from "@material-ui/core";
 import HighlightedInformation from "../utils/HighlightedInformation";
-const Transaction = require("../../blockchain/Transaction").default;
+const Transaction = require("../../blockchain/Transaction");
 
 const styles = theme => ({
   button: {
