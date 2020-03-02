@@ -1,6 +1,6 @@
-const Blockchain = require("./Blockchain").default;
-const Transaction = require("./Transaction").default;
-const Block = require("./Block").default;
+const Blockchain = require("./Blockchain");
+const Transaction = require("./Transaction");
+const Block = require("./Block");
 
 function jsonToBlockchain(jsonString, updateChain) {
   const blockchainDec = JSON.parse(jsonString);
@@ -35,6 +35,4 @@ function jsonToBlockchain(jsonString, updateChain) {
   return blockchain;
 }
 
-module.exports = {
-  default: jsonToBlockchain
-};
+module.exports = jsonToBlockchain;

@@ -1,5 +1,5 @@
-const Transaction = require("./Transaction").default;
-const Block = require("./Block").default;
+const Transaction = require("./Transaction");
+const Block = require("./Block");
 
 class Blockchain {
   constructor(difficulty, updateChain = false, timestamp = false) {
@@ -139,8 +139,7 @@ class Blockchain {
       }
 
       if (currentBlock.hash !== currentBlock.calculateHash()) {
-        console.log("invalid hash");
-        console.log(currentBlock);
+        console.log("Invalid hash");
         return false;
       }
     }
@@ -149,4 +148,4 @@ class Blockchain {
   }
 }
 
-module.exports = { default: Blockchain };
+module.exports = Blockchain;

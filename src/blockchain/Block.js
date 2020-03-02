@@ -47,4 +47,4 @@ class Block {
   }
 }
 
-module.exports = { default: Block };
+module.exports = Block;
