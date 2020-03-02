@@ -6,7 +6,7 @@ import Wallet from "./components/wallet/Wallet";
 import Explorer from "./components/explorer/Explorer";
 import Mine from "./components/mine/Mine";
 import jsonToBlockchain from "./blockchain/jsonToBlockchain";
-const Blockchain = require("./blockchain/Blockchain").default;
+const Blockchain = require("./blockchain/Blockchain");
 
 const styles = theme => ({
   contentWrapper: {
@@ -59,10 +59,7 @@ class App extends PureComponent {
       `https://h2867975.stratoserver.net/centralia-coin/get-blockchain?cb=${Date.now()}`
     );
     ajax.onload = () => {
-      const blockchain = jsonToBlockchain.default(
-        ajax.responseText,
-        this.updateChain
-      );
+      const blockchain = jsonToBlockchain(ajax.responseText, this.updateChain);
       if (blockchain.chain.length > 0) {
         console.log("valid chain came back");
         this.setState({ blockchain: blockchain, chain: blockchain.chain });
@@ -92,7 +89,7 @@ class App extends PureComponent {
         "https://h2867975.stratoserver.net/centralia-coin/add-block"
       );
       ajax.onload = () => {
-        const blockchain = jsonToBlockchain.default(
+        const blockchain = jsonToBlockchain(
           ajax.responseText,
           this.updateChain
         );

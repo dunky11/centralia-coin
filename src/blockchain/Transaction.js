@@ -1,6 +1,6 @@
 const SHA256 = require("crypto-js/sha256");
 const EC = require("elliptic").ec;
-const ec = new EC("secp256k1");
+const secp256k1 = new EC("secp256k1");
 
 class Transaction {
   constructor(fromAddress, toAddress, amount) {
@@ -17,7 +17,7 @@ class Transaction {
   }
 
   signTransaction(pk, sk) {
-    const privKey = ec.keyFromPrivate(sk);
+    const privKey = secp256k1.keyFromPrivate(sk);
     if (pk !== this.fromAddress) {
       throw new Error("You cannot sign transactions for other wallets!");
     }
@@ -33,9 +33,9 @@ class Transaction {
       throw new Error("No signature in this transaction");
     }
 
-    const publicKey = ec.keyFromPublic(this.fromAddress, "hex");
+    const publicKey = secp256k1.keyFromPublic(this.fromAddress, "hex");
     return publicKey.verify(this.calculateHash(), this.signature);
   }
 }
 
-module.exports = { default: Transaction };
+module.exports = Transaction;
