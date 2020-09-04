@@ -10,3 +10,6 @@ Super basic cryptocurrency I build to learn more about the subject - runs in the
 - Mine coins
 - Check how many coins a wallet holds
 - Send coins from one wallet to another
+
+### The project
+The project is split into two branches. The frontend and the backend branch. The frontend branch is basic React and the backend branch runs an express server and MongoDB.
